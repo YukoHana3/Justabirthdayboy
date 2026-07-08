@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 15th Grav! 🎉</title>
+    <!-- Fixed Confetti Library Link -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #341f97);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Main Card Container */
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 440px;
+            width: 90%;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 4px solid #f6b93b;
+            box-sizing: border-box;
+        }
+
+        /* Custom Cat Ears Positioning */
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            top: -24px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 24px solid #f6b93b;
+        }
+        .card::before { left: 40px; }
+        .card::after { right: 40px; }
+
+        h1 {
+            color: #341f97;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: #2d3436;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Row Layout variant explicitly for the trick screen buttons */
+        .btn-row {
+            flex-direction: row !important;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .primary-btn {
+            background-color: #341f97;
+            color: white;
+        }
+        .primary-btn:hover {
+            background-color: #574b90;
+        }
+
+        /* Specific reset properties for the moving No button */
+        #noBtn {
+            background-color: #eaeaea;
+            color: #333;
+            position: absolute;
+            left: 55%;
+            width: auto;
+        }
+
+        #yesBtn {
+            width: auto;
+        }
+
+        /* Hidden visibility wrapper class */
+        .hidden {
+            display: none !important;
+        }
+
+        .emoji {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .accent-text {
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: THE TRICK QUESTION -->
+    <div id="screen1" class="card">
+        <div class="emoji">🐾🐱</div>
+        <h1>Happy Birthday Grav!</h1>
+        <p>Are you a happy twink today??</p>
+        <div class="btn-container btn-row">
+            <button id="yesBtn" class="primary-btn" onclick="celebrateAndNext('screen1', 'screen2')">Yes! 🐾</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="noClicked()">No 😿</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: THE COOL & SMART SELF-ASSESSMENT -->
+    <div id="screen2" class="card hidden">
+        <div class="emoji">😎🧠</div>
+        <h1>Confidence Check!</h1>
+        <p>Let's be real for a second, justabirthdayboy. Are you smart, or are you cool?</p>
+        <div class="btn-container">
+            <button class="primary-btn" onclick="showScreen('screen2', 'screen2_5')">Yes I'm the coolest 😎</button>
+            <button class="primary-btn" onclick="showScreen('screen2', 'screen2_5')">Yes I'm the smartest 🧠</button>
+            <button class="primary-btn" onclick="showScreen('screen2', 'screen3')">No I'm both 👑</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2.5: INTERCEPTED REDIRECT PAGE -->
+    <div id="screen2_5" class="card hidden">
+        <div class="emoji">🧐✨</div>
+        <h1>Don't under-sell yourself!</h1>
+        <p>You tried to pick just one? Wrong answer. You're easily <span class="accent-text">both</span> the coolest AND the smartest 15-year-old around. Let's keep going.</p>
+        <button class="primary-btn" onclick="showScreen('screen2_5', 'screen3')">Damn right, next ➡️</button>
+    </div>
+
+    <!-- SCREEN 3: THE MEOW TEASE -->
+    <div id="screen3" class="card hidden">
+        <div class="emoji">🎤🐈</div>
+        <h1>Wait a second...</h1>
+        <p>Since you're so cool and smart, I just wanted to remind you of your stellar, award-winning vocal performance... What was it again? Oh right: <br><span class="accent-text">"nya onii chan"</span> 💀🔊. Never letting you live that down, Justabirthdayboy.</p>
+        <button class="primary-btn" onclick="showScreen('screen3', 'screen4')">Next Race ➡️</button>
+    </div>
+
+    <!-- SCREEN 4: UMAMUSUME HYPE -->
+    <div id="screen4" class="card hidden">
+        <div class="emoji">🐎💨</div>
+        <h1>Umade Derby Time!</h1>
+        <p>Since you are literally obsessed with <span class="accent-text">Umamusume</span>, I expect you to sprint through your 15th year like Special Week on the final stretch. Ready for the grand finale trophy?</p>
+        <button class="primary-btn" onclick="showScreen('screen4', 'screen5')">Claim Victory 🏆</button>
+    </div>
+
+    <!-- SCREEN 5: FINAL PAGE -->
+    <div id="screen5" class="card hidden">
+        <div class="emoji">🎂👑</div>
+        <h1>Happy 15th Birthday!</h1>
+        <p>Happy Birthday to the one and only <span class="accent-text">Gaurav Chhetri</span>! I never knew I'd end up getting so close to someone like this and I didn't know I would end up actually liking talking to you. You've become a big part of my day and I'm so glad I get to celebrate such a special day with you. May the rest of your year before blessed and I hope you enjoy this special day🎉✨</p>
+    </div>
+
+    <script>
+        // Trigger fullscreen celebration confetti
+        function celebrateAndNext(fromId, toId) {
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 150, spread: 80, origin: { x: 0.1, y: 0.6 } });
+                confetti({ particleCount: 150, spread: 80, origin: { x: 0.9, y: 0.6 } });
+            }
+            
+            setTimeout(() => {
+                showScreen(fromId, toId);
+            }, 400);
+        }
+
+        // Clean screen management using string element IDs
+        function showScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(toId).classList.remove('hidden');
+        }
+
+        function noClicked() {
+            alert("Aww why?? You'll be happy, click yes! 🥺🐾");
+            celebrateAndNext('screen1', 'screen2');
+        }
+
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.floor(Math.random() * 140) - 70;
+            const y = Math.floor(Math.random() * 80) - 40;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+    </script>
+</body>
+  </html>
